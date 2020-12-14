@@ -44,6 +44,11 @@ Vagrant.configure("2") do |config|
       end
 
       config.vm.provision "shell", privileged: true, inline: <<-SHELL
+        set -e
+        echo "Host *
+        StrictHostKeyChecking no
+        UserKnownHostsFile=/dev/null" >> /home/vagrant/.ssh/config
+        
         echo "search nip.io" >> /etc/resolv.conf
         echo "nameserver 8.8.8.8" >> /etc/resolv.conf
         yum -y install wget git net-tools bind-utils yum-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct nano git httpd-tools
@@ -53,14 +58,14 @@ Vagrant.configure("2") do |config|
         ansible --version
         cd ~ && git clone https://github.com/openshift/openshift-ansible
         cd openshift-ansible && git checkout release-3.11
-        ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
-        cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+        ssh-keygen -f /home/vagrant/.ssh/id_rsa -t rsa -N ''
+        cat /home/vagrant/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
         cat /home/vagrant/hosts > /etc/ansible/hosts
         ip_addr=`ifconfig eth1 | awk '/inet / {print $2}'`
         echo "My hostname: `hostname -f` ip: $ip_addr"
-        ansible -m ping all --become-user vagrant --ask-become-pass
-        ansible-playbook playbooks/prerequisites.yml
-        ansible-playbook playbooks/deploy_cluster.yml
+        ansible -m ping all --become-user vagrant
+        ansible-playbook playbooks/prerequisites.yml --become-user vagrant
+        ansible-playbook playbooks/deploy_cluster.yml --become-user vagrant
       SHELL
     end
   end
