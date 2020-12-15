@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
       if opts[:name] == "master"
         config.vm.provision "shell", privileged: false, inline: <<-SHELL
           set -e
-          sudo yum -y install wget git net-tools bind-utils yum-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct nano git httpd-tools
+          sudo yum -y install wget git bind-utils yum-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct nano git httpd-tools
           sudo yum -y install "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
           sudo sed -i -e "s/^enabled=1/enabled=0/" /etc/yum.repos.d/epel.repo
           sudo yum -y --enablerepo=epel install ansible pyOpenSSL
@@ -69,6 +69,8 @@ Vagrant.configure("2") do |config|
         echo "Host *
         StrictHostKeyChecking no
         UserKnownHostsFile=/dev/null" >> /home/vagrant/.ssh/config
+
+        sudo yum -y install net-tools
 
         ip_addr=`ifconfig eth1 | awk '/inet / {print $2}'`
         echo "My hostname: `hostname -f` ip: $ip_addr"
