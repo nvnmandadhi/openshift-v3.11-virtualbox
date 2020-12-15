@@ -1,5 +1,7 @@
 # openshift-v3.11-virtualbox
 
+## This repository helps install an Openshift v3.11 cluster using Ansible, VirtualBox instances and nip.io DNS
+
 #### Instructions:
      1. vagrant up
      2. vagrant ssh master
