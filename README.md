@@ -3,7 +3,7 @@
 ## This repository helps install an Openshift v3.11 cluster using Ansible, VirtualBox instances and nip.io DNS
 
 #### Instructions:
-     1. vagrant up
+     1. ./install.sh
      2. vagrant ssh master
      3. From the master run, sudo htpasswd -c /etc/origin/master/htpasswd
      4. Follow the prompt and change the password for admin user
