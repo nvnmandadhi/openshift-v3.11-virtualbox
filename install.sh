@@ -21,8 +21,8 @@ for vm in master node1; do
     echo "<--------------------------------------------------------------------------->" 
 done;
 
-ssh "vagrant@$master_public_hostname" "ansible -m ping all -i ~/hosts"
-ssh "vagrant@$master_public_hostname" "cd ~ && git clone https://github.com/openshift/openshift-ansible"
-ssh "vagrant@$master_public_hostname" "cd openshift-ansible && git checkout release-3.11"
-ssh "vagrant@$master_public_hostname" "ansible-playbook -i ~/hosts ~/openshift-ansible/playbooks/prerequisites.yml"
-ssh "vagrant@$master_public_hostname" "ansible-playbook -i ~/hosts ~/openshift-ansible/playbooks/deploy_cluster.yml"
+ssh -t "vagrant@$master_public_hostname" "ansible -m ping all -i ~/hosts"
+ssh -t "vagrant@$master_public_hostname" "cd ~ && git clone https://github.com/openshift/openshift-ansible"
+ssh -t "vagrant@$master_public_hostname" "cd openshift-ansible && git checkout release-3.11"
+ssh -t "vagrant@$master_public_hostname" "ansible-playbook -i ~/hosts ~/openshift-ansible/playbooks/prerequisites.yml"
+ssh -t "vagrant@$master_public_hostname" "ansible-playbook -i ~/hosts ~/openshift-ansible/playbooks/deploy_cluster.yml"
