@@ -7,7 +7,7 @@
      2. vagrant ssh master
      3. From the master run, sudo htpasswd -c /etc/origin/master/htpasswd admin
      4. Follow the prompt and change the password for admin user
-     5. Add cluster-admin role using, oc adm policy add-cluster-role-user cluster-admin admin
+     5. Add cluster-admin role using, oc adm policy add-cluster-role-to-user cluster-admin admin
      6. Access the cluster from https://console.apps.192.168.0.10.nip.io
 
 #### References and Credts:
